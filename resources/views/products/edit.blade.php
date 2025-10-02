@@ -6,7 +6,8 @@
     <title>Edit Product</title>
 </head>
 <body>
-    {{-- <form action="/products" method="POST">
+    <h1 class='#123456'>Edit Product</h1>
+    <form action="/products" method="POST">
         @csrf
 
         <div>
@@ -28,6 +29,6 @@
         <br>
 
         <button type="submit">Save</button>
-    </form> --}}
+    </form>
 </body>
 </html>

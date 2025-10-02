@@ -46,10 +46,10 @@ use App\Http\Controllers\ProductsController;
 // )->where('id','[0-9]+');
 
 //One particular controller
-Route::resource('products',ProductsController::class);
+// Route::resource('products',ProductsController::class);
 
 //List of controllers have same CRUD methods
-// Route::resources(['products'=> ProductsController::class]);
+Route::resources(['products'=> ProductsController::class]);
 
 Route::get('/calculation', CalcualtionController::class);
 Route::get('/calculation/a', [CalcualtionController::class,'a']);

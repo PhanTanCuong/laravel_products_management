@@ -24,12 +24,14 @@
     <h1>Products</h1>
 
     <a href="products/create" class="btn btn-primary btn-lg disable" role="button">Create</a>
+
     <table>
         <thead>
             <tr>
                 <th>Product ID</th>
                 <th>Product Name</th>
                 <th>Price ($)</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +40,10 @@
                 <td>{{ $product->product_id }}</td>
                 <td>{{ $product->product_name }}</td>
                 <td>{{ $product->price }}</td>
+                <td>
+                <a href="/products/{{ $product ->id }}/edit" class="btn btn-primary btn-lg disable" role="button">Edit</a>
+                <a href="/products/{{ $product ->id }}" class="btn btn-primary btn-lg disable" role="button">Delete</a>
+                </td>
             </tr>
         @endforeach
 

@@ -35,8 +35,9 @@ class ProductsController extends Controller
         $product->product_id = $request->input('product_id');
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
-        // $product->add();
-        // return redirect('/products');
+
+        $product->save();
+        return redirect('/products');
 
     }
 
@@ -45,7 +46,7 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -53,7 +54,8 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       //Update product
+       return View('products.edit');
     }
 
     /**
