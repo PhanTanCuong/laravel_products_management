@@ -23,7 +23,7 @@
 <body>
     <h1>Products</h1>
 
-    <a href="products/create" class="btn btn-primary btn-lg disable" role="button">Create</a>
+    <button><a href="products/create" class="btn btn-primary btn-lg disable" role="button">Create</a></button>
 
     <table>
         <thead>
@@ -41,8 +41,12 @@
                 <td>{{ $product->product_name }}</td>
                 <td>{{ $product->price }}</td>
                 <td>
-                <a href="/products/{{ $product ->id }}/edit" class="btn btn-primary btn-lg disable" role="button">Edit</a>
-                <a href="/products/{{ $product ->id }}" class="btn btn-primary btn-lg disable" role="button">Delete</a>
+                <button><a href="/products/{{ $product ->id }}/edit" class="btn btn-primary btn-lg disable" role="button">Edit</a></button>
+                <form action="/products/{{ $product ->id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button>Delete</button>
+                </form>
                 </td>
             </tr>
         @endforeach
