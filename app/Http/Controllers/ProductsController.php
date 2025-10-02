@@ -55,7 +55,9 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
        //Update product
-       return View('products.edit');
+        $product = Product::find($id)->first();
+
+       return View('products.edit')->with('product',$product);
     }
 
     /**
