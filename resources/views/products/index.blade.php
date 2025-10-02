@@ -32,6 +32,7 @@
                 <th>Product Name</th>
                 <th>Price ($)</th>
                 <th>Action</th>
+                <th>Detail</th>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +49,7 @@
                     <button>Delete</button>
                 </form>
                 </td>
+                <td><a href="/products/{{ $product->id }}">Show</a></td>
             </tr>
         @endforeach
 

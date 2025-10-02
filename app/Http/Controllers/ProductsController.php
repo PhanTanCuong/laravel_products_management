@@ -46,7 +46,10 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-
+        $product= Product::find($id)->first();
+        return view('products.show',[
+            'product'=>$product,
+        ]);
     }
 
     /**
