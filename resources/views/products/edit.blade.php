@@ -8,9 +8,9 @@
 </head>
 <body>
     <h1 class=''>Edit Product</h1>
-    <form action="/products" method="POST">
+    <form action="/products/{{ $product->id }}" method="POST">
         @csrf
-
+        @method('PUT')
         <div>
             <label for="product_id" >Product ID:</label><br>
             <input type="text" name="product_id" id="product_id" value="{{ $product->product_id }}" required>

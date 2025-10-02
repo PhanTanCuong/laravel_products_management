@@ -65,7 +65,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //update product
+        Product::where('id',$id)
+            ->update([
+                    'product_id'=>$request->input('product_id'),
+                    'product_name'=>$request->input('product_name'),
+                    'price'=>$request->input('price')
+                    ]);
+
+
+        return redirect('/products');
     }
 
     /**
