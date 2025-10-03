@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,20 @@
             border-collapse: collapse;
             margin: 20px 0;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #333;
             padding: 8px 12px;
             text-align: left;
         }
+
         th {
             background: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
     <h1>Products</h1>
 
@@ -36,24 +41,26 @@
             </tr>
         </thead>
         <tbody>
-        @foreach ($products as $product )
-            <tr>
-                <td>{{ $product->product_id }}</td>
-                <td>{{ $product->product_name }}</td>
-                <td>{{ $product->price }}</td>
-                <td>
-                <button><a href="/products/{{ $product ->id }}/edit" class="btn btn-primary btn-lg disable" role="button">Edit</a></button>
-                <form action="/products/{{ $product ->id }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button>Delete</button>
-                </form>
-                </td>
-                <td><a href="/products/{{ $product->id }}">Show</a></td>
-            </tr>
-        @endforeach
+            @foreach ($products as $product)
+                <tr>
+                    <td>{{ $product->product_id }}</td>
+                    <td>{{ $product->product_name }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>
+                        <button><a href="/products/{{ $product->id }}/edit" class="btn btn-primary btn-lg disable"
+                                role="button">Edit</a></button>
+                        <form action="/products/{{ $product->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                    <td><a href="/products/{{ $product->id }}">Show</a></td>
+                </tr>
+            @endforeach
 
         </tbody>
     </table>
 </body>
+
 </html>
