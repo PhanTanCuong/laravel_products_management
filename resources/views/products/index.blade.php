@@ -29,7 +29,11 @@
     <h1>Products</h1>
 
     <button><a href="products/create" class="btn btn-primary btn-lg disable" role="button">Create</a></button>
-
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <table>
         <thead>
             <tr>
@@ -61,6 +65,9 @@
 
         </tbody>
     </table>
+
+
+
 </body>
 
 </html>

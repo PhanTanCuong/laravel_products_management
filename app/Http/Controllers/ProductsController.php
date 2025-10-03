@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 class ProductsController extends Controller
 {
     /**
@@ -35,13 +38,23 @@ class ProductsController extends Controller
     {
         $product = new Product();
 
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required|unique:table_products|max:13',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/products/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
         $product->product_id = $request->input('product_id');
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
 
         $product->save();
-        return redirect('/products');
-
+        return redirect('/products')->with('message', 'Product successfully created!!!');
     }
 
     /**
@@ -49,7 +62,7 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::find($id)->first();
+        $product = Product::find($id);
         return view('products.show')->with('product', $product);
     }
 
@@ -59,7 +72,9 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
         //Update product
-        $product = Product::find($id)->first();
+        // dd($id);
+        $product = Product::find($id);
+        // dd($product);
 
         return View('products.edit')->with('product', $product);
     }
@@ -69,16 +84,37 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $product = Product::find($id);
+        $request->validate([
+            'product_id' => [
+                'required',
+                Rule::unique('table_products')->ignore($product->id)
+            ],
+            // 'product_name' => 'required',
+            // 'price' => 'required|numeric'
+        ]);
+
+        // $validated = $validator->validated();
+
+        // dd($validated);
         //update product
-        Product::where('id', $id)
-            ->update([
-                'product_id' => $request->input('product_id'),
-                'product_name' => $request->input('product_name'),
-                'price' => $request->input('price')
-            ]);
+        // Product::where('id', $id)
+        //     ->update([
+        //         'product_id' => $request->input('product_id'),
+        //         'product_name' => $request->input('product_name'),
+        //         'price' => $request->input('price')
+        //     ]);
 
+        $product->product_id = $request->input('product_id');
+        $product->product_name = $request->input('product_name');
+        $product->price = $request->input('price');
 
-        return redirect('/products');
+        $product->save();
+
+        return redirect()->action(
+            [ProductsController::class, 'edit'],
+            ['product' => $id]
+        );
     }
 
     /**
@@ -88,6 +124,6 @@ class ProductsController extends Controller
     {
         //Delete product
         Product::find($id)->delete();
-        return redirect('/products');
+        return redirect('/products')->with('message', 'Product successfully deleted');
     }
 }
