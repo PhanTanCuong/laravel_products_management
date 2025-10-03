@@ -17,6 +17,13 @@
         <div>
             <label for="product_id">Product ID:</label><br>
             <input type="text" name="product_id" id="product_id" value="{{ $product->product_id }}" required>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <h3>{{ $error }}</h3>
+                    @endforeach
+                </div>
+            @endif
         </div>
         <br>
 
@@ -28,20 +35,23 @@
 
         <div>
             <label for="price">Price:</label><br>
-            <input type="number" step="0.01" name="price" id="price" value="{{ $product->price }}" required>
+            <input type="number" step="0.01" name="price" id="price" value='{{ $product->price }}' required>
         </div>
         <br>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+        <br>
+        <div><button><a href="/products" method="get">Back</a></button></div>
 
-        <button type="submit">Save</button>
+        @if (session('message'))
+            <div>
+                <h3>{{ session('message') }}</h3>
+            </div>
+        @endif
     </form>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <h3>{{ $error }}</h3>
-            @endforeach
-        </div>
-    @endif
+
 
 
 </body>

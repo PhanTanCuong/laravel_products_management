@@ -41,7 +41,6 @@
                 <th>Product Name</th>
                 <th>Price ($)</th>
                 <th>Action</th>
-                <th>Detail</th>
             </tr>
         </thead>
         <tbody>
@@ -49,17 +48,12 @@
                 <tr>
                     <td>{{ $product->product_id }}</td>
                     <td>{{ $product->product_name }}</td>
-                    <td>{{ $product->price }}</td>
+                    <td>${{ $product->price }}</td>
                     <td>
-                        <button><a href="/products/{{ $product->id }}/edit" class="btn btn-primary btn-lg disable"
-                                role="button">Edit</a></button>
-                        <form action="/products/{{ $product->id }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button>Delete</button>
-                        </form>
+                        <button><a href="/products/{{ $product->id }}/edit" role="button">Edit</a></button>
+                        <button><a href="/products/{{ $product->id }}"
+                                class="btn btn-primary btn-lg disable">Show</a></button>
                     </td>
-                    <td><a href="/products/{{ $product->id }}">Show</a></td>
                 </tr>
             @endforeach
 

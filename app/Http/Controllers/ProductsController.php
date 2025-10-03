@@ -114,7 +114,7 @@ class ProductsController extends Controller
         return redirect()->action(
             [ProductsController::class, 'edit'],
             ['product' => $id]
-        );
+        )->with('message', 'Product successfully updated');
     }
 
     /**
