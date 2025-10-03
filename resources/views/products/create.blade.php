@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Product</title>
 </head>
+
 <body>
     <h1>Create Product</h1>
 
     <form action="/products" method="POST">
         @csrf
-
         <div>
             <label for="product_id">Product ID:</label><br>
             <input type="text" name="product_id" id="product_id" required>
@@ -32,4 +33,5 @@
         <button type="submit">Save</button>
     </form>
 </body>
+
 </html>

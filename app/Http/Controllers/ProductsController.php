@@ -14,7 +14,10 @@ class ProductsController extends Controller
     {
         $products = Product::all();
 
-        return view('products.index',['products'=>$products]);
+        return view(
+            'products.index',
+            ['products' => $products]
+        );
     }
 
     /**
@@ -46,7 +49,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-
+        $product = Product::find($id)->first();
+        return view('products.show')->with('product', $product);
     }
 
     /**
@@ -54,10 +58,10 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-       //Update product
+        //Update product
         $product = Product::find($id)->first();
 
-       return View('products.edit')->with('product',$product);
+        return View('products.edit')->with('product', $product);
     }
 
     /**
@@ -66,12 +70,12 @@ class ProductsController extends Controller
     public function update(Request $request, string $id)
     {
         //update product
-        Product::where('id',$id)
+        Product::where('id', $id)
             ->update([
-                    'product_id'=>$request->input('product_id'),
-                    'product_name'=>$request->input('product_name'),
-                    'price'=>$request->input('price')
-                    ]);
+                'product_id' => $request->input('product_id'),
+                'product_name' => $request->input('product_name'),
+                'price' => $request->input('price')
+            ]);
 
 
         return redirect('/products');
