@@ -49,13 +49,15 @@ use App\Http\Controllers\ProductsController;
 // Route::resource('products',ProductsController::class);
 
 //List of controllers have same CRUD methods
-Route::resources(['products'=> ProductsController::class]);
+Route::get('products/search', [ProductsController::class, 'search']);
+Route::resources(['products' => ProductsController::class]);
+
 
 Route::get('/calculation', CalcualtionController::class);
-Route::get('/calculation/a', [CalcualtionController::class,'a']);
+Route::get('/calculation/a', [CalcualtionController::class, 'a']);
 
 
 Route::get('/calculation2nd', [Calculation2ndController::class]);
-Route::get('/calculation2nd/a', [Calculation2ndController::class,'a']);
-Route::get('/calculation2nd/b', [Calculation2ndController::class,'b']);
-Route::get('/calculation2nd/c', [Calculation2ndController::class,'c']);
+Route::get('/calculation2nd/a', [Calculation2ndController::class, 'a']);
+Route::get('/calculation2nd/b', [Calculation2ndController::class, 'b']);
+Route::get('/calculation2nd/c', [Calculation2ndController::class, 'c']);

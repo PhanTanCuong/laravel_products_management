@@ -22,24 +22,43 @@
         th {
             background: #f2f2f2;
         }
+
+            {
+                {
+                -- input[type="text"] {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 4px;
+                }
+
+                button {
+                    padding: 6px 12px;
+                    cursor: pointer;
+                }
+
+                --
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 
 <body>
     <h1>Products</h1>
+    <div>
+        <button><a href="/products/create">Create</a></button>
+        <button><a href="/products">Refresh</a></button>
+    </div>
 
-    <button><a href="products/create" class="btn btn-primary btn-lg disable" role="button">Create</a></button>
     @if (session('message'))
         <div class="alert alert-success">
             {{ session('message') }}
         </div>
     @endif
-
-    {{-- Search form --}}
-    <form action="{{ url('products') }}" method="GET" style="margin: 20px 0;">
-        <input type="text" name="search" style="padding: 5px; width: 250px;">
-        <button type="submit">Search</button>
-    </form>
 
     <table>
         <thead>
@@ -49,6 +68,24 @@
                 <th>Price ($)</th>
                 <th>Action</th>
             </tr>
+            <tr>
+                {{-- Hàng search ngay trong table --}}
+                <form action="/products/search" method="GET">
+                    <td>
+                        <input type="text" name="product_id" value="{{ old('product_id') }}" placeholder="Search by ID">
+                    </td>
+                    <td>
+                        <input type="text" name="product_name" value="{{ old('product_name') }}"
+                            placeholder="Search by name">
+                    </td>
+                    <td>
+                        <input type="text" name="price" value="{{ old('price') }}" placeholder="Search by price">
+                    </td>
+                    <td>
+                        <button type="submit">Search</button>
+                    </td>
+                </form>
+            </tr>
         </thead>
         <tbody>
             @foreach ($products as $product)
@@ -57,18 +94,13 @@
                     <td>{{ $product->product_name }}</td>
                     <td>${{ $product->price }}</td>
                     <td>
-                        <button><a href="/products/{{ $product->id }}/edit" role="button">Edit</a></button>
-                        <button><a href="/products/{{ $product->id }}"
-                                class="btn btn-primary btn-lg disable">Show</a></button>
+                        <button><a href="/products/{{ $product->id }}/edit">Edit</a></button>
+                        <button><a href="/products/{{ $product->id }}">Show</a></button>
                     </td>
                 </tr>
             @endforeach
-
         </tbody>
     </table>
-
-
-
 </body>
 
 </html>

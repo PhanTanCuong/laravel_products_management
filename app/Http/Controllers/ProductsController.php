@@ -15,22 +15,7 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        // if ($request->filled('search')) {
-        //     $products = Product::
-        //         whereAny(
-        //             // ['product_id', 'product_name', 'price'],
-        //             'product_name',
-        //             'like',
-        //             "%{$request->input('search')}%"
-        //         )
-        //         ->get();
-
-        //     return view(
-        //         'products.index',
-        //         ['products' => $products]
-        //     );
-        // }
-
+        $request->session()->flush();
         $products = Product::all();
 
         return view(
@@ -38,6 +23,39 @@ class ProductsController extends Controller
             ['products' => $products]
         );
     }
+
+    /**
+     * Search() Function
+     */
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        $request->flash();
+
+        // dd($data);
+
+        $query = Product::query();
+
+        if ($request->filled('product_id')) {
+            $query->where('product_id', 'like', '%' . $request->input('product_id') . '%');
+        }
+
+        if ($request->filled('product_name')) {
+            $query->where('product_name', 'like', '%' . $request->input('product_name') . '%');
+        }
+
+        if ($request->filled('price')) {
+            $query->where('price', 'like', '%' . $request->input('price') . '%');
+        }
+
+        $products = $query->get();
+
+        return view('products.index', [
+            'products' => $products,
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -106,20 +124,8 @@ class ProductsController extends Controller
                 'required',
                 Rule::unique('table_products')->ignore($product->id)
             ],
-            // 'product_name' => 'required',
-            // 'price' => 'required|numeric'
         ]);
 
-        // $validated = $validator->validated();
-
-        // dd($validated);
-        //update product
-        // Product::where('id', $id)
-        //     ->update([
-        //         'product_id' => $request->input('product_id'),
-        //         'product_name' => $request->input('product_name'),
-        //         'price' => $request->input('price')
-        //     ]);
 
         $product->product_id = $request->input('product_id');
         $product->product_name = $request->input('product_name');
