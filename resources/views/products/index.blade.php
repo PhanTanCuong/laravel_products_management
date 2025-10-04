@@ -34,6 +34,13 @@
             {{ session('message') }}
         </div>
     @endif
+
+    {{-- Search form --}}
+    <form action="{{ url('products') }}" method="GET" style="margin: 20px 0;">
+        <input type="text" name="search" style="padding: 5px; width: 250px;">
+        <button type="submit">Search</button>
+    </form>
+
     <table>
         <thead>
             <tr>
