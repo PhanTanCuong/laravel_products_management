@@ -13,8 +13,24 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // if ($request->filled('search')) {
+        //     $products = Product::
+        //         whereAny(
+        //             // ['product_id', 'product_name', 'price'],
+        //             'product_name',
+        //             'like',
+        //             "%{$request->input('search')}%"
+        //         )
+        //         ->get();
+
+        //     return view(
+        //         'products.index',
+        //         ['products' => $products]
+        //     );
+        // }
+
         $products = Product::all();
 
         return view(
