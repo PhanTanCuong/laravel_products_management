@@ -23,6 +23,7 @@
                     @endforeach
                 </div>
             @endif
+
         </div>
         <br>
 
@@ -39,8 +40,16 @@
             value="{{ old('price') }}" @endif>
         </div>
         <br>
+        <select name="category" id="">
+
+            @foreach ($product_categorizes as $product_category)
+                <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>
+            @endforeach
+        </select>
+        <br>
 
         <button type="submit">Save</button>
+        <br><button><a href="/products">Back</a></button>
     </form>
 
 

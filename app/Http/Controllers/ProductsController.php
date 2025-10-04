@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -62,7 +63,11 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+
+        return view(
+            'products.create',
+            ['product_categorizes' => ProductCategory::all()]
+        );
     }
 
     /**
@@ -110,7 +115,10 @@ class ProductsController extends Controller
         $product = Product::find($id);
         // dd($product);
 
-        return View('products.edit')->with('product', $product);
+        return View('products.edit', [
+            'product' => $product,
+            'product_categorizes' => ProductCategory::all()
+        ]);
     }
 
     /**

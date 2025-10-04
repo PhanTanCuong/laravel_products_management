@@ -51,7 +51,7 @@
     <h1>Products</h1>
     <div>
         <button><a href="/products/create">Create</a></button>
-        <button><a href="/products">Refresh</a></button>
+        <button><a href="/products">Show all</a></button>
     </div>
 
     @if (session('message'))

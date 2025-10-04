@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CalcualtionController;
 use App\Http\Controllers\Calculation2ndController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductsController;
@@ -48,9 +50,14 @@ use App\Http\Controllers\ProductsController;
 //One particular controller
 // Route::resource('products',ProductsController::class);
 
+
+// Product
 //List of controllers have same CRUD methods
 Route::get('products/search', [ProductsController::class, 'search']);
 Route::resources(['products' => ProductsController::class]);
+
+// Product category
+Route::resources(['product_categorizes' => ProductCategoryController::class]);
 
 
 Route::get('/calculation', CalcualtionController::class);

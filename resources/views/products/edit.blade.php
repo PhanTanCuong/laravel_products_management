@@ -38,6 +38,13 @@
             <input type="number" step="0.01" name="price" id="price" value='{{ $product->price }}' required>
         </div>
         <br>
+        <select name="category" id="">
+
+            @foreach ($product_categorizes as $product_category)
+                <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>
+            @endforeach
+        </select>
+        <br>
         <div>
             <button type="submit">Save</button>
         </div>

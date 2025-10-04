@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductCategoryController extends Controller
 {
@@ -12,7 +13,13 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        //Display category resource
+
+        $product_categorizes = ProductCategory::all();
+
+        return view('categorizes.index', [
+            'product_categorizes' => $product_categorizes,
+        ]);
     }
 
     /**
@@ -20,21 +27,39 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        //Create a new product category
+        return view('categorizes.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        //Create a new product category
+
+        // dd($request->input('product_category_name'));
+        $request->validate([
+            'category_name' => ['required|unique:product_categories'],
+        ]);
+        // dd($request->input('product_category_name'));
+
+        $product_category = new ProductCategory;
+
+
+        // dd($request);
+
+
+        $product_category->category_name = $request->input('product_category_name');
+
+        $product_category->save();
+
+        return redirect('/product_categorizes');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ProductCategory $productCategory)
+    public function show(string $id)
     {
         //
     }
@@ -42,24 +67,48 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductCategory $productCategory)
+    public function edit(string $id)
     {
-        //
+        //edit product category
+        $product_category = ProductCategory::find($id);
+        return view('categorizes.edit', [
+            'product_category' => $product_category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(Request $request, string $id)
     {
-        //
+        //Update the product category
+        $product_category = ProductCategory::find($id);
+        // dd($request->input('category_name'));
+        $request->validate([
+            'category_name' => [
+                'required',
+                Rule::unique('product_categories')->ignore($product_category->id)
+            ]
+        ]);
+
+
+        $product_category->category_name = $request->input('category_name');
+
+        $product_category->save();
+        return redirect()->action(
+            [ProductCategoryController::class, 'edit'],
+            $id
+        )
+            ->with('message', 'Product category successfully updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy(string $id)
     {
-        //
+        //Delete the product category
+        ProductCategory::find($id)->delete();
+        return redirect('/product_categorizes');
     }
 }
