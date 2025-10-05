@@ -66,6 +66,7 @@
                 <th>Product ID</th>
                 <th>Product Name</th>
                 <th>Price ($)</th>
+                <th>Category</th>
                 <th>Action</th>
             </tr>
             <tr>
@@ -82,6 +83,10 @@
                         <input type="text" name="price" value="{{ old('price') }}" placeholder="Search by price">
                     </td>
                     <td>
+                        <input type="text" name="product_category" value="{{ old('product_category') }}"
+                            placeholder="Search by category">
+                    </td>
+                    <td>
                         <button type="submit">Search</button>
                     </td>
                 </form>
@@ -93,6 +98,8 @@
                     <td>{{ $product->product_id }}</td>
                     <td>{{ $product->product_name }}</td>
                     <td>${{ $product->price }}</td>
+                    {{-- use operation '?->' for null case --}}
+                    <td>{{ $product->productCategory?->category_name}}</td>
                     <td>
                         <button><a href="/products/{{ $product->id }}/edit">Edit</a></button>
                         <button><a href="/products/{{ $product->id }}">Show</a></button>

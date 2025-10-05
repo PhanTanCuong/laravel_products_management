@@ -39,9 +39,11 @@
         </div>
         <br>
         <select name="product_category_id" id="">
-
+            <option value="">------Choose-------</option>
             @foreach ($product_categorizes as $product_category)
-                <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>
+                <option value="{{ $product_category->id }}" {{ $product->product_category_id == $product_category->id ? 'selected' : '' }}>
+                    {{ $product_category->category_name }}
+                </option>
             @endforeach
         </select>
         <br>
@@ -49,7 +51,7 @@
             <button type="submit">Save</button>
         </div>
         <br>
-        <div><button><a href="/products" method="get">Back</a></button></div>
+
 
         @if (session('message'))
             <div>
@@ -57,6 +59,7 @@
             </div>
         @endif
     </form>
+    <div><button><a href="/products">Back</a></button></div>
 
 
 

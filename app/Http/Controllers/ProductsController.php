@@ -35,22 +35,32 @@ class ProductsController extends Controller
         $request->flash();
 
         // dd($data);
+        // dd($request);
 
-        $query = Product::query();
+
+        $query = Product::query()
+            ->join('product_categories', 'table_products.product_category_id', '=', 'product_categories.id')
+            ->select('table_products.*', 'product_categories.category_name');
 
         if ($request->filled('product_id')) {
-            $query->where('product_id', 'like', '%' . $request->input('product_id') . '%');
+            $query->where('table_products.product_id', 'like', '%' . $request->input('product_id') . '%');
         }
 
         if ($request->filled('product_name')) {
-            $query->where('product_name', 'like', '%' . $request->input('product_name') . '%');
+            $query->where('table_products.product_name', 'like', '%' . $request->input('product_name') . '%');
         }
 
         if ($request->filled('price')) {
-            $query->where('price', 'like', '%' . $request->input('price') . '%');
+            $query->where('table_products.price', 'like', '%' . $request->input('price') . '%');
+        }
+        if ($request->filled('product_category')) {
+            // dd($request->input('product_category'));
+            $query->where('product_categories.category_name', 'like', '%' . $request->input('product_category') . '%');
         }
 
         $products = $query->get();
+        // dd($products);
+
 
         return view('products.index', [
             'products' => $products,
@@ -146,6 +156,7 @@ class ProductsController extends Controller
         $product->product_id = $request->input('product_id');
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
+        $product->product_category_id = $request->input('product_category_id');
 
         $product->save();
 
