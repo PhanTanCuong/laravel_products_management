@@ -16,7 +16,7 @@
         @method('PUT')
         <div>
             <label for="product_id">Product ID:</label><br>
-            <input type="text" name="product_id" id="product_id" value="{{ $product->product_id }}" required>
+            <input type="text" name="product_id" id="product_id" value="{{ $product->product_id }}">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     @foreach ($errors->all() as $error)
@@ -29,16 +29,16 @@
 
         <div>
             <label for="product_name">Product Name:</label><br>
-            <input type="text" name="product_name" id="product_name" value="{{ $product->product_name }}" required>
+            <input type="text" name="product_name" id="product_name" value="{{ $product->product_name }}">
         </div>
         <br>
 
         <div>
             <label for="price">Price:</label><br>
-            <input type="number" step="0.01" name="price" id="price" value='{{ $product->price }}' required>
+            <input type="number" step="0.01" name="price" id="price" value='{{ $product->price }}'>
         </div>
         <br>
-        <select name="category" id="">
+        <select name="product_category_id" id="">
 
             @foreach ($product_categorizes as $product_category)
                 <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>

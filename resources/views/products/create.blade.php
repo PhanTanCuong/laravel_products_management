@@ -9,39 +9,38 @@
 
 <body>
     <h1>Create Product</h1>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <h3>{{ $error }}</h3>
+            @endforeach
+        </div>
+    @endif
 
     <form action="/products" method="POST">
         @csrf
         <div>
             <label for="product_id">Product ID:</label><br>
-            <input type="text" name="product_id" id="product_id" required @if ($errors->any())
-            value="{{ old('product_id') }}" @endif>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        <h3>{{ $error }}</h3>
-                    @endforeach
-                </div>
-            @endif
-
+            <input type="text" name="product_id" id="product_id" @if ($errors->any()) value="{{ old('product_id') }}"
+            @endif>
         </div>
         <br>
 
         <div>
             <label for="product_name">Product Name:</label><br>
-            <input type="text" name="product_name" id="product_name" required @if ($errors->any())
+            <input type="text" name="product_name" id="product_name" @if ($errors->any())
             value="{{ old('product_name') }}" @endif>
         </div>
         <br>
 
         <div>
             <label for="price">Price:</label><br>
-            <input type="number" step="0.01" name="price" id="price" required @if ($errors->any())
-            value="{{ old('price') }}" @endif>
+            <input type="text" step="0.01" name="price" id="price" @if ($errors->any()) value="{{ old('price') }}"
+            @endif>
         </div>
         <br>
-        <select name="category" id="">
-
+        <select name="product_category_id" id="">
+            <option value="">-----Choose------</option>
             @foreach ($product_categorizes as $product_category)
                 <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>
             @endforeach

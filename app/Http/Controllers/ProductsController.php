@@ -75,10 +75,14 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $product = new Product();
 
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|unique:table_products|max:13',
+            'product_name' => 'required',
+            'price' => 'required|numeric',
+            'product_category_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -91,6 +95,7 @@ class ProductsController extends Controller
         $product->product_id = $request->input('product_id');
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
+        $product->product_category_id = $request->input('product_category_id');
 
         $product->save();
         return redirect('/products')->with('message', 'Product successfully created!!!');
@@ -132,6 +137,9 @@ class ProductsController extends Controller
                 'required',
                 Rule::unique('table_products')->ignore($product->id)
             ],
+            'product_name' => 'required',
+            'price' => 'required|numeric',
+            'product_category_id' => 'required'
         ]);
 
 
