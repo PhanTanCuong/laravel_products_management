@@ -21,7 +21,10 @@ class ProductsController extends Controller
 
         return view(
             'products.index',
-            ['products' => $products]
+            [
+                'products' => $products,
+                'product_categorizes' => ProductCategory::all(),
+            ]
         );
     }
 
@@ -38,32 +41,43 @@ class ProductsController extends Controller
         // dd($request);
 
 
-        $query = Product::query()
-            ->join('product_categories', 'table_products.product_category_id', '=', 'product_categories.id')
-            ->select('table_products.*', 'product_categories.category_name');
+        // $query = Product::query()
+        //     ->join('product_categories', 'table_products.product_category_id', '=', 'product_categories.id')
+        //     ->select('table_products.*', 'product_categories.category_name');
+        // dd($request);
 
-        if ($request->filled('product_id')) {
-            $query->where('table_products.product_id', 'like', '%' . $request->input('product_id') . '%');
+        if ($request->anyFilled(['product_id', 'product_name', 'price', 'product_category'])) {
+            // dd($request);
+            // $query->where('table_products.product_id', 'like', '%' . $request->input('product_id') . '%');
+            $products = Product::where('product_id', 'like', '%' . $request->input('product_id') . '%')
+                ->where('product_name', 'like', '%' . $request->input('product_name') . '%')
+                ->where('price', 'like', '%' . $request->input('price') . '%')
+                ->where('product_category_id', $request->input('product_category'))
+                ->get();
+
+            // dd($products);
         }
 
-        if ($request->filled('product_name')) {
-            $query->where('table_products.product_name', 'like', '%' . $request->input('product_name') . '%');
-        }
+        // if ($request->filled('product_name')) {
+        //     $query->where('table_products.product_name', 'like', '%' . $request->input('product_name') . '%');
+        // }
 
-        if ($request->filled('price')) {
-            $query->where('table_products.price', 'like', '%' . $request->input('price') . '%');
-        }
-        if ($request->filled('product_category')) {
-            // dd($request->input('product_category'));
-            $query->where('product_categories.category_name', 'like', '%' . $request->input('product_category') . '%');
-        }
+        // if ($request->filled('price')) {
+        //     $query->where('table_products.price', 'like', '%' . $request->input('price') . '%');
+        // }
 
-        $products = $query->get();
+        // if ($request->filled('product_category')) {
+        //     // dd($request->input('product_category'));
+        //     $query->where('table_products.product_category_id', $request->input('product_category'));
+        // }
+
+        // $products = $query->get();
         // dd($products);
 
 
         return view('products.index', [
             'products' => $products,
+            'product_categorizes' => ProductCategory::all(),
         ]);
     }
 
