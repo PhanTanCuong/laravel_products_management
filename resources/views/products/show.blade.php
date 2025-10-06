@@ -71,6 +71,7 @@
             <p>Do you want to delete this product?</p>
             <div class="modal-buttons">
                 <form id="deleteForm" action="/products/{{ $product->id }}" method="POST">
+
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn-delete">Delete</button>
@@ -79,6 +80,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         const modal = document.getElementById('confirmModal');

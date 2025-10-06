@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -36,44 +37,24 @@ class ProductsController extends Controller
     {
         // dd($request);
         $request->flash();
-
-        // dd($data);
-        // dd($request);
-
-
-        // $query = Product::query()
-        //     ->join('product_categories', 'table_products.product_category_id', '=', 'product_categories.id')
-        //     ->select('table_products.*', 'product_categories.category_name');
-        // dd($request);
-
-        if ($request->anyFilled(['product_id', 'product_name', 'price', 'product_category'])) {
-            // dd($request);
-            // $query->where('table_products.product_id', 'like', '%' . $request->input('product_id') . '%');
-            $products = Product::where('product_id', 'like', '%' . $request->input('product_id') . '%')
-                ->where('product_name', 'like', '%' . $request->input('product_name') . '%')
-                ->where('price', 'like', '%' . $request->input('price') . '%')
-                ->where('product_category_id', $request->input('product_category'))
-                ->get();
-
-            // dd($products);
-        }
-
-        // if ($request->filled('product_name')) {
-        //     $query->where('table_products.product_name', 'like', '%' . $request->input('product_name') . '%');
-        // }
-
-        // if ($request->filled('price')) {
-        //     $query->where('table_products.price', 'like', '%' . $request->input('price') . '%');
-        // }
-
-        // if ($request->filled('product_category')) {
-        //     // dd($request->input('product_category'));
-        //     $query->where('table_products.product_category_id', $request->input('product_category'));
-        // }
-
-        // $products = $query->get();
-        // dd($products);
-
+        $products = Product::query()
+            ->when(
+                $request->filled('product_id'),
+                fn($query) => $query->where('product_id', 'like', "%{$request->product_id}%")
+            )
+            ->when(
+                $request->filled('product_name'),
+                fn($query) => $query->where('product_name', 'like', "%{$request->product_name}%")
+            )
+            ->when(
+                $request->filled('price'),
+                fn($query) => $query->where('price', 'like', "%{$request->price}%")
+            )
+            ->when(
+                $request->filled('product_category'),
+                fn($query) => $query->where('product_category_id', $request->product_category)
+            )
+            ->get();
 
         return view('products.index', [
             'products' => $products,

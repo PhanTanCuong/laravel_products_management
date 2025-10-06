@@ -11,7 +11,7 @@
         table {
             width: 60%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 10px 0 20px 20px;
         }
 
         th,
@@ -22,7 +22,8 @@
         }
 
         th {
-            background: #f2f2f2;
+            text-align: center;
+            background: #64def6;
         }
 
             {
@@ -50,10 +51,12 @@
 </head>
 
 <body>
+    <div class=" mt-4 d-flex justify-content-center text-danger">
     <h1>Products</h1>
-    <div>
-        <button><a href="/products/create">Create</a></button>
-        <button><a href="/products">Show all</a></button>
+    </div>
+    <div class="d-flex ms-4 gap-1 p-1">
+        <button class="btn btn-primary"><a href="/products/create">Create</a></button>
+        <button class="btn btn-primary"><a href="/products">Show all</a></button>
     </div>
 
     @if (session('message'))
@@ -97,7 +100,7 @@
                         </select>
                     </td>
                     <td>
-                        <button type="submit">Search</button>
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </td>
                 </form>
             </tr>
@@ -110,9 +113,9 @@
                     <td>${{ $product->price }}</td>
                     {{-- use operation '?->' for null case --}}
                     <td>{{ $product->productCategory?->category_name}}</td>
-                    <td class="display:flex gap:5px">
-                        <button><a href="/products/{{ $product->id }}/edit">Edit</a></button>
-                        <button><a href="/products/{{ $product->id }}">Show</a></button>
+                    <td class="d-flex p-2 gap-1">
+                        <button class="btn btn-warning"><a href="/products/{{ $product->id }}/edit">Edit</a></button>
+                        <button class="btn btn-primary"><a href="/products/{{ $product->id }}">Show</a></button>
                     </td>
                 </tr>
             @endforeach
