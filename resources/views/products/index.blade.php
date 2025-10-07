@@ -54,16 +54,24 @@
     <div class=" mt-4 d-flex justify-content-center text-danger">
     <h1>Products</h1>
     </div>
-    <div class="d-flex ms-4 gap-1 p-1">
-        <button class="btn btn-primary"><a href="/products/create">Create</a></button>
-        <button class="btn btn-primary"><a href="/products">Show all</a></button>
-    </div>
+
+
 
     @if (session('message'))
         <div class="alert alert-success">
             {{ session('message') }}
         </div>
     @endif
+<div>
+<div class="d-flex justify-content-left">
+    <div class="d-flex ms-4 gap-1 p-1">
+        <button class="btn btn-primary"><a href="/products/create">Create</a></button>
+        <button class="btn btn-primary"><a href="/products">Show all</a></button>
+    </div>
+    <div>
+    <h4>Results: {{$products->count() }}</h4>
+    </div>
+    </div>
 
     <table>
         <thead>
@@ -76,25 +84,25 @@
             </tr>
             <tr>
                 {{-- Hàng search ngay trong table --}}
-                <form action="/products/search" method="GET">
+                <form action="/products" method="GET">
                     <td>
-                        <input type="text" name="product_id" value="{{ old('product_id') }}" placeholder="Search by ID">
+                        <input type="text" name="product_id" value="{{ request()->input('product_id') }}" placeholder="Search by ID">
                     </td>
                     <td>
-                        <input type="text" name="product_name" value="{{ old('product_name') }}"
+                        <input type="text" name="product_name" value="{{request()->input('product_name')}}"
                             placeholder="Search by name">
                     </td>
                     <td>
-                        <input type="text" name="price" value="{{ old('price') }}" placeholder="Search by price">
+                        <input type="text" name="price" value="{{request()->input('price')}}" placeholder="Search by price">
                     </td>
                     <td>
                         {{-- <input type="text" name="product_category" value="{{ old('product_category') }}"
                             placeholder="Search by category"> --}}
                         <select name="product_category" id="">
                             <option value="">--------Choose---------</option>
-                            @foreach ($product_categorizes as $product_category)
+                            @foreach ($product_categories as $product_category)
                                 <option value="{{ $product_category->id }}"
-                                {{ $product_category->id == old('product_category') ? 'selected': '' }}>
+                                {{ $product_category->id == request()->input('product_category') ? 'selected': '' }}>
                                 {{ $product_category->category_name }}</option>
                             @endforeach
                         </select>
@@ -121,6 +129,8 @@
             @endforeach
         </tbody>
     </table>
+</div>
+
 </body>
 
 </html>
