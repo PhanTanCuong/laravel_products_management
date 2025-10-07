@@ -4,39 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
+
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\View\View;
 
 class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
-        $request->session()->flush();
-        $products = Product::all();
 
-        return view(
-            'products.index',
-            [
-                'products' => $products,
-                'product_categorizes' => ProductCategory::all(),
-            ]
-        );
-    }
-
-    /**
-     * Search() Function
-     */
-
-    public function search(Request $request)
-    {
-        // dd($request);
-        $request->flash();
         $products = Product::query()
             ->when(
                 $request->filled('product_id'),
@@ -56,29 +40,32 @@ class ProductsController extends Controller
             )
             ->get();
 
-        return view('products.index', [
-            'products' => $products,
-            'product_categorizes' => ProductCategory::all(),
-        ]);
+        return view(
+            'products.index',
+            [
+                'products' => $products,
+                'product_categories' => ProductCategory::all(),
+            ]
+        );
     }
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
 
         return view(
             'products.create',
-            ['product_categorizes' => ProductCategory::all()]
+            ['product_categories' => ProductCategory::all()]
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // dd($request);
         $product = new Product();
@@ -109,7 +96,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
         $product = Product::find($id);
         return view('products.show')->with('product', $product);
@@ -118,7 +105,7 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
         //Update product
         // dd($id);
@@ -127,14 +114,14 @@ class ProductsController extends Controller
 
         return View('products.edit', [
             'product' => $product,
-            'product_categorizes' => ProductCategory::all()
+            'product_categories' => ProductCategory::all()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         $product = Product::find($id);
         $request->validate([
@@ -164,7 +151,7 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         //Delete product
         Product::find($id)->delete();
