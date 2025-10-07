@@ -9,7 +9,7 @@
 
 <body>
     <h1>Create new product category</h1>
-    <form action="/product_categorizes" method="POST">
+    <form action="/product_categories" method="POST">
         @csrf
         <input type="text" name="product_category_name" placeholder="Enter new category" required>
         @if ($errors->any())
@@ -21,7 +21,7 @@
         @endif
         <button type="submit">Create</button>
     </form>
-    <button><a href="/product_categorizes">Back</a></button>
+    <button><a href="/product_categories">Back</a></button>
 </body>
 
 </html>

@@ -49,7 +49,7 @@
     <h1>Product Categories</h1>
 
     {{-- Create Form --}}
-    <button type="submit"><a href="/product_categorizes/create">Create</a></button>
+    <button type="submit"><a href="/product_categories/create">Create</a></button>
     <button type="button" onclick="window.location.reload()">Show all</button>
 
     @if (session('message'))
@@ -70,15 +70,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($product_categorizes as $product_category)
+            @foreach ($product_categories as $product_category)
                 <tr>
                     <td>
                         {{ $product_category->category_name }}
                     </td>
                     <td>
-                        <button><a href=" product_categorizes/{{ $product_category->id }}/edit">Edit</a></button>
+                        <button><a href=" product_categories/{{ $product_category->id }}/edit">Edit</a></button>
                         {{-- Delete form --}}
-                        <form class="inline" action="/product_categorizes/{{ $product_category->id }}" method="POST"
+                        <form class="inline" action="/product_categories/{{ $product_category->id }}" method="POST"
                             onsubmit="return confirm('Do you want to delete this category?')">
                             @csrf
                             @method('DELETE')
