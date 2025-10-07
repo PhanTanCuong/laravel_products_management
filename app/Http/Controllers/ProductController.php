@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
@@ -38,7 +41,10 @@ class ProductController extends Controller
                 $request->filled('product_category'),
                 fn($query) => $query->where('product_category_id', $request->product_category)
             )
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
+
+        // dd($products->url());
 
         return view(
             'products.index',
@@ -143,7 +149,7 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->action(
-            [ProductsController::class, 'edit'],
+            [ProductController::class, 'edit'],
             ['product' => $id]
         )->with('message', 'Product successfully updated');
     }
