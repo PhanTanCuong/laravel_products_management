@@ -52,7 +52,7 @@
 
 <body>
     <div class=" mt-4 d-flex justify-content-center text-danger">
-    <h1>Products</h1>
+        <h1>Products</h1>
     </div>
 
 
@@ -62,18 +62,19 @@
             {{ session('message') }}
         </div>
     @endif
-<div>
-<div class="d-flex justify-content-left">
-    <div class="d-flex ms-4 gap-1 p-1">
-        <button class="btn btn-primary"><a href="/products/create">Create</a></button>
-        <button class="btn btn-primary"><a href="/products">Show all</a></button>
-    </div>
     <div>
-    <h4>Results: {{$products->count() }}</h4>
-    </div>
-    </div>
+        <div class="d-flex justify-content-left">
+            <div class="d-flex ms-4 gap-1 p-1">
+                <button class="btn btn-primary"><a href="/products/create">Create</a></button>
+                <button class="btn btn-primary"><a href="/products">Show all</a></button>
+            </div>
+            <div>
+                <h4>Results: {{$products->count() }}</h4>
+            </div>
+        </div>
 
-    <table>
+        <div class="d-flex justify-content-center">
+<table>
         <thead>
             <tr>
                 <th>Product ID</th>
@@ -83,7 +84,7 @@
                 <th>Action</th>
             </tr>
             <tr>
-                {{-- Hàng search ngay trong table --}}
+                {{-- Search row in table--}}
                 <form action="/products" method="GET">
                     <td>
                         <input type="text" name="product_id" value="{{ request()->input('product_id') }}" placeholder="Search by ID">
@@ -129,7 +130,11 @@
             @endforeach
         </tbody>
     </table>
-</div>
+        <div class="d-flex flex-column justify-content-center mt-4">
+              {{ $products->links() }}
+        </div>
+    </div>
+    </div>
 
 </body>
 

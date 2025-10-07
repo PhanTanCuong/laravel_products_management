@@ -1,24 +1,34 @@
 <?php
 
+
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Contracts\View\View;
 class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View
     {
         //Display category resource
 
-        $product_categories = ProductCategory::all();
+        $product_categories = ProductCategory::query()
+            ->when(
+                $request->filled('product_category'),
+                fn($query) => $query->where('id', $request->product_category)
+            )
+            ->get();
 
         return view('categories.index', [
+            'product_category_selections' => ProductCategory::all(),
             'product_categories' => $product_categories,
         ]);
     }
@@ -26,7 +36,7 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         //Create a new product category
         return view('categories.create');
@@ -34,7 +44,7 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         //Create a new product category
 
@@ -68,7 +78,7 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
         //edit product category
         $product_category = ProductCategory::find($id);
@@ -80,7 +90,7 @@ class ProductCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         //Update the product category
         $product_category = ProductCategory::find($id);
@@ -106,7 +116,7 @@ class ProductCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         //Delete the product category
         ProductCategory::find($id)->delete();

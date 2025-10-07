@@ -50,7 +50,9 @@
 
     {{-- Create Form --}}
     <button type="submit"><a href="/product_categories/create">Create</a></button>
-    <button type="button" onclick="window.location.reload()">Show all</button>
+    <form action="/product_categories" method="get">
+        <button type="submit">Show all</button>
+    </form>
 
     @if (session('message'))
         <div class="alert alert-success">{{ session('message') }}</div>
@@ -70,6 +72,25 @@
             </tr>
         </thead>
         <tbody>
+            <form action="/product_categories" method="get">
+                <tr>
+                    <td>
+                        <select name="product_category">
+                            <option value="">-------Choose------</option>
+                            @foreach ($product_category_selections as $product_category)
+                                <option value="{{ $product_category->id}}"
+                                    {{ $product_category->id === request()->input('product_category') ? 'selected' : '' }}>
+                                    {{ $product_category->category_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <button>Search</button>
+                    </td>
+                </tr>
+            </form>
+
             @foreach ($product_categories as $product_category)
                 <tr>
                     <td>
@@ -89,6 +110,7 @@
             @endforeach
         </tbody>
     </table>
+
 
 </body>
 
