@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -15,10 +16,10 @@ class ProductCategoryController extends Controller
     {
         //Display category resource
 
-        $product_categorizes = ProductCategory::all();
+        $product_categories = ProductCategory::all();
 
-        return view('categorizes.index', [
-            'product_categorizes' => $product_categorizes,
+        return view('categories.index', [
+            'product_categories' => $product_categories,
         ]);
     }
 
@@ -28,7 +29,7 @@ class ProductCategoryController extends Controller
     public function create()
     {
         //Create a new product category
-        return view('categorizes.create');
+        return view('categories.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -53,7 +54,7 @@ class ProductCategoryController extends Controller
 
         $product_category->save();
 
-        return redirect('/product_categorizes');
+        return redirect('/product_categories');
     }
 
     /**
@@ -71,7 +72,7 @@ class ProductCategoryController extends Controller
     {
         //edit product category
         $product_category = ProductCategory::find($id);
-        return view('categorizes.edit', [
+        return view('categories.edit', [
             'product_category' => $product_category,
         ]);
     }
@@ -109,6 +110,6 @@ class ProductCategoryController extends Controller
     {
         //Delete the product category
         ProductCategory::find($id)->delete();
-        return redirect('/product_categorizes');
+        return redirect('/product_categories');
     }
 }

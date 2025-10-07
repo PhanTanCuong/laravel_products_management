@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form action="/product_categorizes/{{ $product_category->id }}" method="POST">
+    <form action="/product_categories/{{ $product_category->id }}" method="POST">
         @csrf
         @method('PUT')
         <input type="text" name="category_name" value="{{ $product_category->category_name }}" required>
@@ -28,7 +28,7 @@
             <h3>{{ session('message') }}</h3>
         </div>
     @endif
-    <button><a href="/product_categorizes">Back</a></button>
+    <button><a href="/product_categories">Back</a></button>
 </body>
 
 </html>

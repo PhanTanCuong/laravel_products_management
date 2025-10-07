@@ -41,7 +41,7 @@
         <br>
         <select name="product_category_id" id="">
 
-            @foreach ($product_categorizes as $product_category)
+            @foreach ($product_categories as $product_category)
                 <option value="{{ $product_category->id }}">{{ $product_category->category_name }}</option>
             @endforeach
         </select>
